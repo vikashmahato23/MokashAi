@@ -49,15 +49,14 @@ const SearchAndFilters = memo(function SearchAndFilters({
         placeholder="Search by name or email..."
         value={searchTerm}
         onChange={(e) => onSearchTermChange(e.target.value)}
-        className="px-4 py-2 border rounded-lg"
-        style={{ width: '300px', borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
+        style={{ width: '300px' }}
       />
 
       <select
         value={statusFilter}
         onChange={(e) => onStatusFilterChange(e.target.value)}
-        className="px-4 py-2 border rounded-lg"
-        style={{ borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
       >
         <option value="all">All Status</option>
         <option value="active">Active</option>
@@ -70,24 +69,21 @@ const SearchAndFilters = memo(function SearchAndFilters({
         placeholder="Filter by company..."
         value={companyFilter}
         onChange={(e) => onCompanyFilterChange(e.target.value)}
-        className="px-4 py-2 border rounded-lg"
-        style={{ borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
       />
 
       <input
         type="date"
         value={dateRangeFilter.start}
         onChange={(e) => onDateRangeChange({ ...dateRangeFilter, start: e.target.value })}
-        className="px-4 py-2 border rounded-lg"
-        style={{ borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
       />
 
       <input
         type="date"
         value={dateRangeFilter.end}
         onChange={(e) => onDateRangeChange({ ...dateRangeFilter, end: e.target.value })}
-        className="px-4 py-2 border rounded-lg"
-        style={{ borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
       />
 
       <input
@@ -95,8 +91,8 @@ const SearchAndFilters = memo(function SearchAndFilters({
         placeholder="Min revenue"
         value={revenueMin}
         onChange={(e) => onRevenueMinChange(e.target.value)}
-        className="px-4 py-2 border rounded-lg"
-        style={{ width: '150px', borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
+        style={{ width: '150px' }}
       />
 
       <input
@@ -104,15 +100,14 @@ const SearchAndFilters = memo(function SearchAndFilters({
         placeholder="Max revenue"
         value={revenueMax}
         onChange={(e) => onRevenueMaxChange(e.target.value)}
-        className="px-4 py-2 border rounded-lg"
-        style={{ width: '150px', borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
+        style={{ width: '150px' }}
       />
 
       <select
         value={sortField}
         onChange={(e) => onSortFieldChange(e.target.value)}
-        className="px-4 py-2 border rounded-lg"
-        style={{ borderColor: '#ddd' }}
+        className="px-4 py-2 border border-black rounded-lg text-black"
       >
         <option value="">Sort by...</option>
         <option value="firstName">First Name</option>
@@ -124,7 +119,7 @@ const SearchAndFilters = memo(function SearchAndFilters({
 
       <button
         onClick={onSortOrderToggle}
-        className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+        className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-black border border-black"
       >
         {sortOrder === 'asc' ? '↑' : '↓'}
       </button>

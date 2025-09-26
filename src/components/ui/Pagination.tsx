@@ -24,7 +24,7 @@ const Pagination = memo(function Pagination({
 }: PaginationProps) {
   return (
     <>
-      <div className="mb-4 text-sm text-gray-600">
+      <div className="mb-4 text-sm text-black">
         Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, totalItems)} of {totalItems} customers
       </div>
 
@@ -33,31 +33,31 @@ const Pagination = memo(function Pagination({
           <button
             onClick={() => onPageChange(1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-3 py-1 border border-black rounded disabled:opacity-50 text-black"
           >
             First
           </button>
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-3 py-1 border border-black rounded disabled:opacity-50 text-black"
           >
             Previous
           </button>
-          <span className="px-3 py-1">
+          <span className="px-3 py-1 text-black">
             Page {currentPage} of {totalPages}
           </span>
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-3 py-1 border border-black rounded disabled:opacity-50 text-black"
           >
             Next
           </button>
           <button
             onClick={() => onPageChange(totalPages)}
             disabled={currentPage === totalPages}
-            className="px-3 py-1 border rounded disabled:opacity-50"
+            className="px-3 py-1 border border-black rounded disabled:opacity-50 text-black"
           >
             Last
           </button>
@@ -66,7 +66,7 @@ const Pagination = memo(function Pagination({
         <select
           value={itemsPerPage}
           onChange={(e) => onItemsPerPageChange(parseInt(e.target.value))}
-          className="px-3 py-1 border rounded"
+          className="px-3 py-1 border border-black rounded text-black"
         >
           <option value="10">10 per page</option>
           <option value="25">25 per page</option>

@@ -196,7 +196,7 @@ export default function CustomerDashboard() {
   return (
     <div className="p-6" style={{ backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-3xl font-bold mb-6" style={{ color: '#333' }}>
+        <h1 className="text-3xl font-bold mb-6 text-black">
           Customer Dashboard
         </h1>
 

@@ -24,14 +24,14 @@ const DeleteConfirmationModal = memo(function DeleteConfirmationModal({
       title="Confirm Delete"
       width="400px"
     >
-      <p className="mb-4">
+      <p className="mb-4 text-black">
         Are you sure you want to delete {customer.firstName} {customer.lastName}?
       </p>
-      <p className="text-sm text-gray-600 mb-6">This action cannot be undone.</p>
+      <p className="text-sm text-black mb-6">This action cannot be undone.</p>
       <div className="flex justify-end gap-2">
         <button
           onClick={onCancel}
-          className="px-4 py-2 border rounded hover:bg-gray-100"
+          className="px-4 py-2 border border-black rounded hover:bg-gray-100 text-black"
         >
           Cancel
         </button>

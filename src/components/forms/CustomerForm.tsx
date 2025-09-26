@@ -34,13 +34,13 @@ const CustomerForm = memo(function CustomerForm({
     type: string = 'text'
   ) => (
     <div>
-      <label className="block mb-1">{label}</label>
+      <label className="block mb-1 text-black">{label}</label>
       <input
         type={type}
         value={formData[field]}
         onChange={(e) => handleInputChange(field, e.target.value)}
-        className="w-full px-3 py-2 border rounded"
-        style={{ borderColor: formErrors[field] ? 'red' : '#ddd' }}
+        className="w-full px-3 py-2 border border-black rounded text-black"
+        style={{ borderColor: formErrors[field] ? 'red' : 'black' }}
       />
       {formErrors[field] && (
         <span style={{ color: 'red', fontSize: '12px' }}>{formErrors[field]}</span>
@@ -59,12 +59,12 @@ const CustomerForm = memo(function CustomerForm({
         {renderInput('Position', 'position')}
 
         <div>
-          <label className="block mb-1">Status</label>
+          <label className="block mb-1 text-black">Status</label>
           <select
             value={formData.status}
             onChange={(e) => handleInputChange('status', e.target.value)}
-            className="w-full px-3 py-2 border rounded"
-            style={{ borderColor: formErrors.status ? 'red' : '#ddd' }}
+            className="w-full px-3 py-2 border border-black rounded text-black"
+            style={{ borderColor: formErrors.status ? 'red' : 'black' }}
           >
             <option value="pending">Pending</option>
             <option value="active">Active</option>
@@ -85,7 +85,7 @@ const CustomerForm = memo(function CustomerForm({
       <div className="mt-6 flex justify-end gap-2">
         <button
           onClick={onClose}
-          className="px-4 py-2 border rounded hover:bg-gray-100"
+          className="px-4 py-2 border border-black rounded hover:bg-gray-100 text-black"
         >
           Cancel
         </button>
