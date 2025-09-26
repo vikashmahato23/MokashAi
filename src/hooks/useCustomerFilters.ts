@@ -1,35 +1,8 @@
 import { useState, useMemo, useCallback } from 'react';
-
-interface Customer {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  company: string;
-  status: string;
-  revenue: number;
-  dateCreated: string;
-  tags: string[];
-  [key: string]: any;
-}
-
-interface FilterState {
-  searchTerm: string;
-  statusFilter: string;
-  companyFilter: string;
-  dateRangeFilter: { start: string; end: string };
-  revenueMin: string;
-  revenueMax: string;
-  selectedTags: string[];
-}
-
-interface SortState {
-  field: string;
-  order: 'asc' | 'desc';
-}
+import { Customer, FilterOptions, SortOptions, UseCustomerFiltersReturn } from '../../types';
 
 export function useCustomerFilters(customers: Customer[]) {
-  const [filters, setFilters] = useState<FilterState>({
+  const [filters, setFilters] = useState<FilterOptions>({
     searchTerm: '',
     statusFilter: 'all',
     companyFilter: '',
@@ -39,7 +12,7 @@ export function useCustomerFilters(customers: Customer[]) {
     selectedTags: []
   });
 
-  const [sort, setSort] = useState<SortState>({
+  const [sort, setSort] = useState<SortOptions>({
     field: '',
     order: 'asc'
   });
@@ -112,7 +85,7 @@ export function useCustomerFilters(customers: Customer[]) {
     return filtered;
   }, [customers, filters, sort]);
 
-  const updateFilters = useCallback((newFilters: Partial<FilterState>) => {
+  const updateFilters = useCallback((newFilters: Partial<FilterOptions>) => {
     setFilters(prev => ({ ...prev, ...newFilters }));
   }, []);
 

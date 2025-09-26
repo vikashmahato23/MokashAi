@@ -1,7 +1,9 @@
+import { Customer } from '../../types';
+
 // Shared in-memory data store for the demo
 // In a real application, this would be a database
 
-export let customers = [
+export let customers: Customer[] = [
   {"id": 1, "firstName": "John", "lastName": "Smith", "email": "john.smith@techcorp.com", "phone": "555-0101", "company": "TechCorp", "position": "Senior Developer", "status": "active", "dateCreated": "2024-01-15T10:30:00Z", "lastUpdated": "2024-12-01T14:22:00Z", "address": {"street": "123 Main St", "city": "San Francisco", "state": "CA", "zipCode": "94105"}, "tags": ["enterprise", "technology", "priority"], "revenue": 125000},
   {"id": 2, "firstName": "Sarah", "lastName": "Johnson", "email": "sarah.j@innovate.io", "phone": "555-0102", "company": "Innovate.io", "position": "Product Manager", "status": "active", "dateCreated": "2024-02-20T09:15:00Z", "lastUpdated": "2024-11-28T16:45:00Z", "address": {"street": "456 Oak Ave", "city": "New York", "state": "NY", "zipCode": "10001"}, "tags": ["startup", "growth"], "revenue": 85000},
   {"id": 3, "firstName": "Michael", "lastName": "Williams", "email": "m.williams@globalfinance.com", "phone": "555-0103", "company": "Global Finance", "position": "CFO", "status": "inactive", "dateCreated": "2023-11-10T14:20:00Z", "lastUpdated": "2024-06-15T10:30:00Z", "address": {"street": "789 Wall St", "city": "New York", "state": "NY", "zipCode": "10005"}, "tags": ["finance", "enterprise"], "revenue": 250000},
@@ -21,8 +23,8 @@ export let customers = [
 
 export let nextId = customers.length + 1;
 
-export function addCustomer(customer: any) {
-  const customerWithId = {
+export function addCustomer(customer: Omit<Customer, 'id' | 'dateCreated' | 'lastUpdated'>): Customer {
+  const customerWithId: Customer = {
     ...customer,
     id: nextId++,
     dateCreated: new Date().toISOString(),
@@ -32,11 +34,12 @@ export function addCustomer(customer: any) {
   return customerWithId;
 }
 
-export function updateCustomer(id: number, updatedCustomer: any) {
+export function updateCustomer(id: number, updatedCustomer: Partial<Customer>): Customer | null {
   const index = customers.findIndex(c => c.id === id);
   if (index === -1) return null;
-  
+
   customers[index] = {
+    ...customers[index],
     ...updatedCustomer,
     id,
     lastUpdated: new Date().toISOString(),
@@ -44,18 +47,18 @@ export function updateCustomer(id: number, updatedCustomer: any) {
   return customers[index];
 }
 
-export function deleteCustomer(id: number) {
+export function deleteCustomer(id: number): boolean {
   const index = customers.findIndex(c => c.id === id);
   if (index === -1) return false;
-  
+
   customers.splice(index, 1);
   return true;
 }
 
-export function getCustomer(id: number) {
+export function getCustomer(id: number): Customer | undefined {
   return customers.find(c => c.id === id);
 }
 
-export function getCustomers() {
+export function getCustomers(): Customer[] {
   return customers;
 }

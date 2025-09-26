@@ -1,15 +1,15 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import { Customer } from '@/types';
-import { useCustomers } from '@/hooks/useCustomers';
-import { useCustomerFilters } from '@/hooks/useCustomerFilters';
-import { useCustomerForm } from '@/hooks/useCustomerForm';
-import SearchAndFilters from '@/components/ui/SearchAndFilters';
-import CustomerTable from '@/components/ui/CustomerTable';
-import Pagination from '@/components/ui/Pagination';
-import CustomerForm from '@/components/forms/CustomerForm';
-import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal';
+import { Customer } from '../../../types';
+import { useCustomers } from '../../hooks/useCustomers';
+import { useCustomerFilters } from '../../hooks/useCustomerFilters';
+import { useCustomerForm } from '../../hooks/useCustomerForm';
+import SearchAndFilters from '../../components/ui/SearchAndFilters';
+import CustomerTable from '../../components/ui/CustomerTable';
+import Pagination from '../../components/ui/Pagination';
+import CustomerForm from '../../components/forms/CustomerForm';
+import DeleteConfirmationModal from '../../components/modals/DeleteConfirmationModal';
 
 export default function CustomerDashboard() {
   // Custom hooks for data and business logic

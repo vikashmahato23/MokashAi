@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCustomers, addCustomer } from '@/lib/data';
+import { getCustomers, addCustomer } from '../../../lib/data';
+import { Customer, CustomerCreateRequest } from '../../../../types';
 
 // Simulate API delay
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -41,12 +42,15 @@ export async function GET(request: NextRequest) {
   const sortField = searchParams.get('_sort');
   const sortOrder = searchParams.get('_order') || 'asc';
   
-  if (sortField) {
-    filteredCustomers.sort((a: any, b: any) => {
+  if (sortField && sortField in filteredCustomers[0]) {
+    filteredCustomers.sort((a: Customer, b: Customer) => {
+      const aValue = a[sortField as keyof Customer];
+      const bValue = b[sortField as keyof Customer];
+
       if (sortOrder === 'asc') {
-        return a[sortField] > b[sortField] ? 1 : -1;
+        return aValue > bValue ? 1 : -1;
       } else {
-        return a[sortField] < b[sortField] ? 1 : -1;
+        return aValue < bValue ? 1 : -1;
       }
     });
   }
@@ -68,9 +72,16 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   await delay(Math.floor(Math.random() * 500) + 500);
-  
-  const newCustomer = await request.json();
-  const customerWithId = addCustomer(newCustomer);
-  
-  return NextResponse.json(customerWithId, { status: 201 });
+
+  try {
+    const newCustomer: Omit<Customer, 'id' | 'dateCreated' | 'lastUpdated'> = await request.json();
+    const customerWithId = addCustomer(newCustomer);
+
+    return NextResponse.json(customerWithId, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Failed to create customer', details: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 400 }
+    );
+  }
 }

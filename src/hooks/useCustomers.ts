@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Customer, UseCustomersReturn, CustomerCreateRequest } from '@/types';
+import { Customer, UseCustomersReturn, CustomerCreateRequest } from '../../types';
 
 /**
  * Custom hook for managing customer data and operations

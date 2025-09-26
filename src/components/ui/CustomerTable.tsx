@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Customer, CustomerTableProps as ICustomerTableProps } from '@/types';
+import { Customer, CustomerTableProps as ICustomerTableProps } from '../../../types';
 
 interface CustomerTableProps extends ICustomerTableProps {
   customers: Customer[];

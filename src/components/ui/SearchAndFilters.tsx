@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { SearchAndFiltersProps } from '@/types';
+import { SearchAndFiltersProps } from '../../../types';
 
 interface LocalSearchAndFiltersProps {
   searchTerm: string;

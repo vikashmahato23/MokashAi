@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { PaginationProps as IPaginationProps } from '@/types';
+import { PaginationProps as IPaginationProps } from '../../../types';
 
 interface PaginationProps extends IPaginationProps {
   currentPage: number;

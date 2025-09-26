@@ -1,24 +1,5 @@
 import { useState, useCallback } from 'react';
-
-interface CustomerFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  company: string;
-  position: string;
-  status: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  revenue: string;
-  tags?: string[];
-}
-
-interface CustomerFormErrors {
-  [key: string]: string;
-}
+import { CustomerFormData, FormErrors, Customer, CustomerStatus, UseCustomerFormReturn } from '../../types';
 
 const initialFormData: CustomerFormData = {
   firstName: '',
@@ -27,7 +8,7 @@ const initialFormData: CustomerFormData = {
   phone: '',
   company: '',
   position: '',
-  status: 'pending',
+  status: CustomerStatus.PENDING,
   street: '',
   city: '',
   state: '',
@@ -38,10 +19,10 @@ const initialFormData: CustomerFormData = {
 
 export function useCustomerForm() {
   const [formData, setFormData] = useState<CustomerFormData>(initialFormData);
-  const [formErrors, setFormErrors] = useState<CustomerFormErrors>({});
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   const validateForm = useCallback(() => {
-    const errors: CustomerFormErrors = {};
+    const errors: FormErrors = {};
 
     if (!formData.firstName) errors.firstName = 'First name is required';
     if (!formData.lastName) errors.lastName = 'Last name is required';
@@ -66,7 +47,7 @@ export function useCustomerForm() {
     setFormErrors({});
   }, []);
 
-  const initializeForm = useCallback((customer?: any) => {
+  const initializeForm = useCallback((customer?: Customer) => {
     if (customer) {
       setFormData({
         firstName: customer.firstName || '',
@@ -75,7 +56,7 @@ export function useCustomerForm() {
         phone: customer.phone || '',
         company: customer.company || '',
         position: customer.position || '',
-        status: customer.status || 'pending',
+        status: customer.status || CustomerStatus.PENDING,
         street: customer.address?.street || '',
         city: customer.address?.city || '',
         state: customer.address?.state || '',

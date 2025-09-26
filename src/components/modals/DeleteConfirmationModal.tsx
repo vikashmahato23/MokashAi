@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { Customer, DeleteConfirmationModalProps as IDeleteConfirmationModalProps } from '@/types';
-import Modal from '@/components/ui/Modal';
+import { Customer, DeleteConfirmationModalProps as IDeleteConfirmationModalProps } from '../../../types';
+import Modal from '../ui/Modal';
 
 interface DeleteConfirmationModalProps extends IDeleteConfirmationModalProps {
   isOpen: boolean;

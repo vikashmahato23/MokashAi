@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { CustomerFormData, FormErrors, CustomerFormProps as ICustomerFormProps, CustomerStatus } from '@/types';
-import Modal from '@/components/ui/Modal';
+import { CustomerFormData, FormErrors, CustomerFormProps as ICustomerFormProps, CustomerStatus } from '../../../types';
+import Modal from '../ui/Modal';
 
 interface CustomerFormProps extends ICustomerFormProps {
   isOpen: boolean;
