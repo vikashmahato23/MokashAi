@@ -25,40 +25,40 @@ const CustomerTable = memo(function CustomerTable({
       <table className="w-full border-collapse">
         <thead>
           <tr style={{ backgroundColor: '#f9fafb' }}>
-            <th className="border p-2 text-left">
+            <th className="border p-2 text-left text-black">
               <input
                 type="checkbox"
                 checked={selectAll}
                 onChange={(e) => onSelectAll(e.target.checked)}
               />
             </th>
-            <th className="border p-2 text-left">Name</th>
-            <th className="border p-2 text-left">Email</th>
-            <th className="border p-2 text-left">Company</th>
-            <th className="border p-2 text-left">Position</th>
-            <th className="border p-2 text-left">Status</th>
-            <th className="border p-2 text-left">Revenue</th>
-            <th className="border p-2 text-left">Location</th>
-            <th className="border p-2 text-left">Actions</th>
+            <th className="border p-2 text-left text-black">Name</th>
+            <th className="border p-2 text-left text-black">Email</th>
+            <th className="border p-2 text-left text-black">Company</th>
+            <th className="border p-2 text-left text-black">Position</th>
+            <th className="border p-2 text-left text-black">Status</th>
+            <th className="border p-2 text-left text-black">Revenue</th>
+            <th className="border p-2 text-left text-black">Location</th>
+            <th className="border p-2 text-left text-black">Actions</th>
           </tr>
         </thead>
         <tbody>
           {customers.map((customer: Customer) => (
             <tr key={customer.id} className="hover:bg-gray-50">
-              <td className="border p-2">
+              <td className="border p-2 text-black">
                 <input
                   type="checkbox"
                   checked={selectedCustomers.includes(customer.id)}
                   onChange={() => onSelectCustomer(customer.id)}
                 />
               </td>
-              <td className="border p-2">
+              <td className="border p-2 text-black">
                 {customer.firstName} {customer.lastName}
               </td>
-              <td className="border p-2">{customer.email}</td>
-              <td className="border p-2">{customer.company}</td>
-              <td className="border p-2">{customer.position}</td>
-              <td className="border p-2">
+              <td className="border p-2 text-black">{customer.email}</td>
+              <td className="border p-2 text-black">{customer.company}</td>
+              <td className="border p-2 text-black">{customer.position}</td>
+              <td className="border p-2 text-black">
                 <span className={`px-2 py-1 rounded-full text-xs ${
                   customer.status === 'active' ? 'bg-green-100 text-green-800' :
                   customer.status === 'inactive' ? 'bg-red-100 text-red-800' :
@@ -67,8 +67,8 @@ const CustomerTable = memo(function CustomerTable({
                   {customer.status}
                 </span>
               </td>
-              <td className="border p-2">${customer.revenue.toLocaleString()}</td>
-              <td className="border p-2">{customer.address.city}, {customer.address.state}</td>
+              <td className="border p-2 text-black">${customer.revenue.toLocaleString()}</td>
+              <td className="border p-2 text-black">{customer.address.city}, {customer.address.state}</td>
               <td className="border p-2">
                 <button
                   onClick={() => onEditCustomer(customer)}
