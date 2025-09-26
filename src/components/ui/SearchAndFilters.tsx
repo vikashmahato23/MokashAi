@@ -1,4 +1,7 @@
-interface SearchAndFiltersProps {
+import { memo } from 'react';
+import { SearchAndFiltersProps } from '@/types';
+
+interface LocalSearchAndFiltersProps {
   searchTerm: string;
   statusFilter: string;
   companyFilter: string;
@@ -19,7 +22,7 @@ interface SearchAndFiltersProps {
   onExportCSV: () => void;
 }
 
-export default function SearchAndFilters({
+const SearchAndFilters = memo(function SearchAndFilters({
   searchTerm,
   statusFilter,
   companyFilter,
@@ -143,4 +146,6 @@ export default function SearchAndFilters({
       </button>
     </div>
   );
-}
+});
+
+export default SearchAndFilters;

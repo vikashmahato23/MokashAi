@@ -1,19 +1,7 @@
-interface Customer {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  company: string;
-  position: string;
-  status: string;
-  revenue: number;
-  address: {
-    city: string;
-    state: string;
-  };
-}
+import { memo } from 'react';
+import { Customer, CustomerTableProps as ICustomerTableProps } from '@/types';
 
-interface CustomerTableProps {
+interface CustomerTableProps extends ICustomerTableProps {
   customers: Customer[];
   selectedCustomers: number[];
   selectAll: boolean;
@@ -23,7 +11,7 @@ interface CustomerTableProps {
   onDeleteCustomer: (customer: Customer) => void;
 }
 
-export default function CustomerTable({
+const CustomerTable = memo(function CustomerTable({
   customers,
   selectedCustomers,
   selectAll,
@@ -103,4 +91,6 @@ export default function CustomerTable({
       </table>
     </div>
   );
-}
+});
+
+export default CustomerTable;

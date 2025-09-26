@@ -1,4 +1,7 @@
-interface PaginationProps {
+import { memo } from 'react';
+import { PaginationProps as IPaginationProps } from '@/types';
+
+interface PaginationProps extends IPaginationProps {
   currentPage: number;
   totalPages: number;
   itemsPerPage: number;
@@ -9,7 +12,7 @@ interface PaginationProps {
   onItemsPerPageChange: (itemsPerPage: number) => void;
 }
 
-export default function Pagination({
+const Pagination = memo(function Pagination({
   currentPage,
   totalPages,
   itemsPerPage,
@@ -73,4 +76,6 @@ export default function Pagination({
       </div>
     </>
   );
-}
+});
+
+export default Pagination;

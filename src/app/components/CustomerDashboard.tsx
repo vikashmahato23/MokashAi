@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import { Customer } from '@/types';
 import { useCustomers } from '@/hooks/useCustomers';
 import { useCustomerFilters } from '@/hooks/useCustomerFilters';
 import { useCustomerForm } from '@/hooks/useCustomerForm';
@@ -9,27 +10,6 @@ import CustomerTable from '@/components/ui/CustomerTable';
 import Pagination from '@/components/ui/Pagination';
 import CustomerForm from '@/components/forms/CustomerForm';
 import DeleteConfirmationModal from '@/components/modals/DeleteConfirmationModal';
-
-interface Customer {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  company: string;
-  position: string;
-  status: string;
-  revenue: number;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
-  tags: string[];
-  dateCreated: string;
-  lastUpdated: string;
-}
 
 export default function CustomerDashboard() {
   // Custom hooks for data and business logic
@@ -50,47 +30,58 @@ export default function CustomerDashboard() {
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
 
-  // Pagination calculations
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentCustomers = filteredCustomers.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
+  // Pagination calculations - memoized for performance
+  const paginationData = useMemo(() => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentCustomers = filteredCustomers.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
 
-  // Event handlers
-  const handleSelectAll = (checked: boolean) => {
+    return {
+      indexOfLastItem,
+      indexOfFirstItem,
+      currentCustomers,
+      totalPages
+    };
+  }, [currentPage, itemsPerPage, filteredCustomers]);
+
+  const { indexOfLastItem, indexOfFirstItem, currentCustomers, totalPages } = paginationData;
+
+  // Event handlers - memoized to prevent unnecessary re-renders
+  const handleSelectAll = useCallback((checked: boolean) => {
     setSelectAll(checked);
     if (checked) {
       setSelectedCustomers(currentCustomers.map(c => c.id));
     } else {
       setSelectedCustomers([]);
     }
-  };
+  }, [currentCustomers]);
 
-  const handleSelectCustomer = (id: number) => {
+  const handleSelectCustomer = useCallback((id: number) => {
     setSelectedCustomers(prev =>
       prev.includes(id)
         ? prev.filter(customerId => customerId !== id)
         : [...prev, id]
     );
-  };
+  }, []);
 
-  const handleEditCustomer = (customer: Customer) => {
+  const handleEditCustomer = useCallback((customer: Customer) => {
     setEditingCustomer(customer);
     initializeForm(customer);
     setShowEditModal(true);
-  };
+  }, [initializeForm]);
 
-  const handleAddCustomer = () => {
+  const handleAddCustomer = useCallback(() => {
     initializeForm();
     setShowAddModal(true);
-  };
+  }, [initializeForm]);
 
-  const handleDeleteCustomer = (customer: Customer) => {
+  const handleDeleteCustomer = useCallback((customer: Customer) => {
     setCustomerToDelete(customer);
     setShowDeleteModal(true);
-  };
+  }, []);
 
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = useCallback(async () => {
     if (!validateForm() || !editingCustomer) return;
 
     const customerData = {
@@ -116,9 +107,9 @@ export default function CustomerDashboard() {
       setEditingCustomer(null);
       initializeForm();
     }
-  };
+  }, [validateForm, editingCustomer, formData, updateCustomer, initializeForm]);
 
-  const handleSaveNew = async () => {
+  const handleSaveNew = useCallback(async () => {
     if (!validateForm()) return;
 
     const newCustomerData = {
@@ -144,9 +135,9 @@ export default function CustomerDashboard() {
       setShowAddModal(false);
       initializeForm();
     }
-  };
+  }, [validateForm, formData, addCustomer, initializeForm]);
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmDelete = useCallback(async () => {
     if (!customerToDelete) return;
 
     const success = await deleteCustomer(customerToDelete.id);
@@ -154,34 +145,34 @@ export default function CustomerDashboard() {
       setShowDeleteModal(false);
       setCustomerToDelete(null);
     }
-  };
+  }, [customerToDelete, deleteCustomer]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowEditModal(false);
     setShowAddModal(false);
     setShowDeleteModal(false);
     setEditingCustomer(null);
     setCustomerToDelete(null);
     initializeForm();
-  };
+  }, [initializeForm]);
 
-  const handleExportCSV = () => {
+  const handleExportCSV = useCallback(() => {
     console.log('Export to CSV clicked');
     alert('CSV export not implemented yet');
-  };
+  }, []);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number) => {
     setCurrentPage(page);
     setSelectAll(false);
     setSelectedCustomers([]);
-  };
+  }, []);
 
-  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+  const handleItemsPerPageChange = useCallback((newItemsPerPage: number) => {
     setItemsPerPage(newItemsPerPage);
     setCurrentPage(1);
     setSelectAll(false);
     setSelectedCustomers([]);
-  };
+  }, []);
 
   // Loading and error states
   if (loading) {

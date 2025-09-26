@@ -1,31 +1,18 @@
 import { useState, useEffect } from 'react';
+import { Customer, UseCustomersReturn, CustomerCreateRequest } from '@/types';
 
-interface Customer {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  company: string;
-  position: string;
-  status: string;
-  revenue: number;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-  };
-  tags: string[];
-  dateCreated: string;
-  lastUpdated: string;
-}
-
+/**
+ * Custom hook for managing customer data and operations
+ * Provides CRUD operations for customers with optimized state updates
+ */
 export function useCustomers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  /**
+   * Fetches all customers from the API
+   */
   const fetchCustomers = async () => {
     try {
       setLoading(true);
@@ -40,7 +27,7 @@ export function useCustomers() {
     }
   };
 
-  const addCustomer = async (customerData: any) => {
+  const addCustomer = async (customerData: CustomerCreateRequest) => {
     try {
       const response = await fetch('/api/customers', {
         method: 'POST',
@@ -51,7 +38,8 @@ export function useCustomers() {
       });
 
       if (response.ok) {
-        await fetchCustomers(); // Refresh the list
+        const newCustomer = await response.json();
+        setCustomers(prev => [...prev, newCustomer]);
         return true;
       }
       return false;
@@ -62,7 +50,7 @@ export function useCustomers() {
     }
   };
 
-  const updateCustomer = async (id: number, customerData: any) => {
+  const updateCustomer = async (id: number, customerData: Partial<Customer>) => {
     try {
       const response = await fetch(`/api/customers/${id}`, {
         method: 'PUT',
@@ -73,7 +61,10 @@ export function useCustomers() {
       });
 
       if (response.ok) {
-        await fetchCustomers(); // Refresh the list
+        const updatedCustomer = await response.json();
+        setCustomers(prev => prev.map(customer =>
+          customer.id === id ? updatedCustomer : customer
+        ));
         return true;
       }
       return false;
@@ -91,7 +82,7 @@ export function useCustomers() {
       });
 
       if (response.ok) {
-        await fetchCustomers(); // Refresh the list
+        setCustomers(prev => prev.filter(customer => customer.id !== id));
         return true;
       }
       return false;
